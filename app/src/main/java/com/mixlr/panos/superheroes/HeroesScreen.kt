@@ -2,6 +2,7 @@ package com.mixlr.panos.superheroes
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,9 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -82,13 +86,35 @@ fun HeroImage(
     @DrawableRes image: Int,
     modifier: Modifier = Modifier
 ) {
-    Image(
-        painter = painterResource(id = image),
-        contentDescription = null,
+    Box(
         modifier = modifier
+            .size(72.dp)
             .clip(RoundedCornerShape(8.dp))
-            .padding(start = 16.dp)
-            .size(72.dp, 72.dp),
-        contentScale = ContentScale.Crop
+    ) {
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = null,
+            alignment = Alignment.TopCenter,
+            modifier = modifier
+                .padding(start = 16.dp),
+            contentScale = ContentScale.FillWidth
+        )
+
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HeroesTopAppBar(
+    modifier: Modifier = Modifier
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.displayLarge
+            )
+        },
+        modifier = modifier
     )
 }
