@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.mixlr.panos.superheroes.model.Hero
+import com.mixlr.panos.superheroes.model.HeroesRepository
 import com.mixlr.panos.superheroes.ui.theme.SuperheroesTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Heroes(HeroesRepository.heroes)
                 }
             }
         }
@@ -30,17 +33,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+fun Heroes(
+    heroes: List<Hero>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
         modifier = modifier
-    )
+    ) {
+        items(heroes) { hero ->
+            HeroListItem(hero)
+        }
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 fun GreetingPreview() {
     SuperheroesTheme {
-        Greeting("Android")
+        Heroes(HeroesRepository.heroes)
     }
 }
